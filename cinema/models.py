@@ -109,7 +109,7 @@ class Ticket(models.Model):
         Ticket.validate_row_and_seat(
             self.row, self.movie_session.cinema_hall.rows,
             self.seat, self.movie_session.cinema_hall.seats_in_row,
-            ValueError
+            ValidationError
         )
 
     def save(

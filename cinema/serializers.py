@@ -103,14 +103,20 @@ class TicketSerializer(serializers.ModelSerializer):
         fields = ("id", "row", "seat", "movie_session")
 
     def validate(self, attrs):
-        Ticket.validate_row_and_seat(
-            attrs["row"],
-            attrs["movie_session"].cinema_hall.rows,
-            attrs["seat"],
-            attrs["movie_session"].cinema_hall.seats_in_row,
-            serializers.ValidationError
-
-        )
+        movie_session = attrs.get("movie_session")
+        if movie_session:
+            Ticket.validate_row_and_seat(
+                attrs["row"],
+                movie_session.cinema_hall.rows,
+                attrs["seat"],
+                movie_session.cinema_hall.seats_in_row,
+                serializers.ValidationError
+            )
+        else:
+            raise serializers.ValidationError(
+                "Movie session is required."
+            )
+        return attrs
 
 
 class OrderSerializer(serializers.ModelSerializer):
