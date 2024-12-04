@@ -64,6 +64,7 @@ class OrderApiTests(TestCase):
         self.assertEqual(ticket["row"], 2)
         self.assertEqual(ticket["seat"], 12)
         movie_session = ticket["movie_session"]
+        print(movie_session)
         self.assertEqual(movie_session["movie_title"], "Titanic")
         self.assertEqual(movie_session["cinema_hall_name"], "White")
         self.assertEqual(movie_session["cinema_hall_capacity"], 140)
